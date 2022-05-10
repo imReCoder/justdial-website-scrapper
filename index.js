@@ -1,12 +1,12 @@
 const puppeteer = require('puppeteer-extra');
 const fs = require('fs');
 const stealthPlugin = require('puppeteer-extra-plugin-stealth');
-
+const path = require('path');
 // Change These Values To Search
 const CITY = 'Bangalore';
-const KEYWORD = 'Doctor';
+const KEYWORD = 'Plumber';
 const INITIAL_PAGE = 0;
-const NUMBER_OF_PAGES = 2;
+const NUMBER_OF_PAGES = 1;
 
 const NUMBER_CODE_MAP = {
   'icon-acb': '0',
@@ -49,7 +49,7 @@ const parsePage = async (pageNumber) => {
 
   let directory = [];
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
     args: ['--no-sandbox'],
   });
 
@@ -57,51 +57,60 @@ const parsePage = async (pageNumber) => {
     const page = await browser.newPage();
 
     await page.goto(
-      `https://www.justdial.com/${CITY}/${KEYWORD}/page-${pageNumber}`
+      `https://www.justdial.com/${CITY}/${KEYWORD}/page-${pageNumber}`, { waitUntil: 'load', timeout: 0 }
     );
+    await page.addScriptTag({ url: "https://html2canvas.hertzen.com/dist/html2canvas.min.js" });
+    await page.addScriptTag({ url: "https://unpkg.com/tesseract.js@v2.0.0-alpha.4/dist/tesseract.min.js" });
 
+
+    const filepath = path.join(__dirname, "inject.js");
+    await page.addScriptTag({ path: require.resolve(filepath) });
     await autoScroll(page);
 
-    directory = await page.evaluate((NUMBER_CODE_MAP) => {
+    directory = await page.evaluate(async (NUMBER_CODE_MAP) => {
       const entries = [];
       const listings = document.getElementsByClassName('cntanr');
 
-      for (const listing of listings) {
+      for await (const listing of listings) {
+        console.log('listing', listing);
         const name = listing.getElementsByClassName('lng_cont_name')[0]
           .textContent;
         const url = listing.attributes[1].value;
-        const phoneNumberArr = Array.from(
-          listing.getElementsByClassName('mobilesv')
-        );
-        const phoneNumber = phoneNumberArr
-          .map((number) => NUMBER_CODE_MAP[number.classList[1]])
-          .join('');
+        const p = await screenshot(listing.getElementsByClassName('contact-info')[0]);
+        console.log("phone is ", p);
+        // const phoneNumberArr = Array.from(
+        //   listing.getElementsByClassName('mobilesv')
+        // );
+        // console.log("Phone number arr ", phoneNumberArr);
+        // const phoneNumber = phoneNumberArr
+        //   .map((number) => NUMBER_CODE_MAP[number.classList[1]])
+        //   .join('');
 
-        entries.push({ name, url, phoneNumber });
+        entries.push({ name, url, phoneNumber: p });
       }
 
       return entries;
     }, NUMBER_CODE_MAP);
 
-    console.log('Total Listings Found:', directory.length);
+    console.log('Total Listing.s Found:', directory.length);
 
     for await (const listing of directory) {
       console.log('Navigating to Listing:', listing.name);
 
       await page.goto(listing.url);
-
+      console.log("listing info is ", listing);
       const details = await page.evaluate(() => {
         const name = document
           .getElementsByClassName('rstotle')[0]
-          .textContent.trim();
+          ?.textContent?.trim() | '';
         const rating = document.getElementsByClassName('total-rate')[0]
-          .textContent;
+          ?.textContent || '';
         const votes = document
           .getElementsByClassName('votes')[0]
           .textContent.trim();
         const address = document
           .getElementById('fulladdress')
-          .getElementsByClassName('lng_add')[0].textContent;
+          .getElementsByClassName('lng_add')[0]?.textContent || '';
         removedn('showmore');
         const categoriesArr = Array.from(
           document.getElementsByClassName('showmore')[0].children
@@ -115,12 +124,12 @@ const parsePage = async (pageNumber) => {
         const businfo =
           document.getElementsByClassName('detl') &&
           document.getElementsByClassName('detl')[0]
-            ? document.getElementsByClassName('detl')[0].innerText || ''
+            ? document.getElementsByClassName('detl')[0]?.innerText || ''
             : '-';
         const faq =
           document.getElementsByClassName('city_sec') &&
           document.getElementsByClassName('city_sec')[0]
-            ? document.getElementsByClassName('city_sec')[0].innerText
+            ? document.getElementsByClassName('city_sec')[0]?.innerText
             : '-';
 
         let details = {
@@ -130,7 +139,7 @@ const parsePage = async (pageNumber) => {
           address,
           categories,
           businfo,
-          faq,
+          faq
         };
 
         if (servicesNode) {
@@ -154,6 +163,7 @@ const parsePage = async (pageNumber) => {
 
       const listingIndex = directory.findIndex((x) => x.url === listing.url);
       directory[listingIndex] = { ...directory[listingIndex], ...details };
+      console.log(directory);
     }
   } catch (e) {
     console.error(e);

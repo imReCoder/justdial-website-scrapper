@@ -1,0 +1,283 @@
+@font-face {
+    font-family: "icomoon";
+    src: url(/public/nfonts/roboto-v151.eot?xvyl5q);
+    src: url(/public/nfonts/roboto-v151.eot?xvyl5q#iefix) format("embedded-opentype"),
+        url(/public/nfonts/roboto-v151.woff2?xvyl5q) format("woff2"),
+        url(/public/nfonts/roboto-v151.ttf?xvyl5q) format("truetype"),
+        url(/public/nfonts/roboto-v151.woff?xvyl5q) format("woff"),
+        url(/public/nfonts/roboto-v151.svg?xvyl5q#icomoon) format("svg");
+    font-weight: 400;
+    font-style: normal;
+}
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: "icomoon" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-jie:before {
+    content: "\9d002";
+}
+.icon-fec:before {
+    content: "\9d004";
+}
+.icon-baa:before {
+    content: "\9d001";
+}
+.icon-lkf:before {
+    content: "\9d005";
+}
+
+.icon-yzm:before {
+    content: "\9d010";
+}
+.icon-nlm:before {
+    content: "\9d007";
+}
+.icon-dcb:before {
+    content: "\9d009";
+}
+.icon-ikj:before {
+    content: "\9d003";
+}
+.icon-wxl:before {
+    content: "\9d006";
+}
+.icon-poh:before {
+    content: "\9d008";
+}
+.icon-tsj:before {
+    content: "\9d011";
+}
+.icon-nmg:before {
+    content: "\9d012";
+}
+.icon-vuk:before {
+    content: "\9d013";
+}
+.icon-hgd:before {
+    content: "\9d014";
+}
+.mobilesv {
+    font-size: 11px;
+    color: #000;
+    padding: 0 1px;
+    letter-spacing: 0.6px;
+    font-weight: 700;
+}
+.comptel .mobilesv {
+    font-weight: 400;
+    font-size: 10px;
+}
+.comptel {
+    white-space: nowrap;
+}
+.comp-contact .icon-valplus {
+    font-size: 8px;
+}
+.icon-nmg {
+    font-size: 1px;
+    position: relative;
+    top: -4px;
+}
+.rstocnct .mobilesv {
+    font-size: 12px;
+    color: #fff;
+    padding: 0 1px;
+    letter-spacing: 0.9px;
+}
+.rstocnct .icon-nmg {
+    font-size: 1px;
+    position: relative;
+    top: -4px;
+}
+.rstocnct .icon-tsj {
+    font-size: 10px;
+}
+.store-details .mobilesv {
+    font-size: 11px;
+    color: #424242;
+    font-weight: 400;
+}
+.store-details p.contact-info span.mobilesv {
+    margin: 0;
+}
+.store-details .icon-nmg {
+    font-size: 1px;
+}
+.store-details .icon-tsj {
+    font-size: 8px;
+}
+.jdtlphntxt .mobilesv {
+    font-size: 10px;
+    color: #424242;
+    font-weight: 400;
+}
+.jdtlphntxt .icon-nmg {
+    font-size: 1px;
+}
+.jdtlphntxt .icon-tsj {
+    font-size: 8px;
+}
+.jdtlphntxt .mobilesv {
+    letter-spacing: 0.5px;
+}
+.compdt .mobilesv {
+    font-size: 10px;
+    color: #424242;
+    font-weight: 400;
+}
+.compdt .icon-nmg {
+    font-size: 1px;
+}
+.compdt .icon-tsj {
+    font-size: 8px;
+}
+/* /////////////////////////// */
+
+@font-face {
+    font-family: "icomoon";
+    src: url(/public/nfonts/roboto-v15.eot?xvyl5q);
+    src: url(/public/nfonts/roboto-v15.eot?xvyl5q#iefix) format("embedded-opentype"),
+        url(/public/nfonts/roboto-v15.woff2?xvyl5q) format("woff2"),
+        url(/public/nfonts/roboto-v15.ttf?xvyl5q) format("truetype"),
+        url(/public/nfonts/roboto-v15.woff?xvyl5q) format("woff"),
+        url(/public/nfonts/roboto-v15.svg?xvyl5q#icomoon) format("svg");
+    font-weight: 400;
+    font-style: normal;
+}
+[class^="icon-"],
+[class*=" icon-"] {
+    font-family: "icomoon" !important;
+    speak: none;
+    font-style: normal;
+    font-weight: 400;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-lkf:before {
+    content: "\9d001";
+}
+.icon-jie:before {
+    content: "\9d002";
+}
+.icon-rqi:before {
+    content: "\9d003";
+}
+.icon-nlm:before {
+    content: "\9d004";
+}
+.icon-tsj:before {
+    content: "\9d005";
+}
+.icon-vuk:before {
+    content: "\9d006";
+}
+.icon-fec:before {
+    content: "\9d007";
+}
+.icon-poh:before {
+    content: "\9d008";
+}
+.icon-yzm:before {
+    content: "\9d009";
+}
+.icon-ikj:before {
+    content: "\9d010";
+}
+.icon-wxl:before {
+    content: "\9d011";
+}
+.icon-hgd:before {
+    content: "\9d012";
+}
+.icon-nmg:before {
+    content: "\9d013";
+}
+.icon-trs:before {
+    content: "\9d014";
+}
+.mobilesv {
+    font-size: 11px;
+    color: #000;
+    padding: 0 1px;
+    letter-spacing: 0.6px;
+    font-weight: 700;
+}
+.comptel .mobilesv {
+    font-weight: 400;
+    font-size: 10px;
+}
+.comptel {
+    white-space: nowrap;
+}
+.comp-contact .icon-valplus {
+    font-size: 8px;
+}
+.icon-hgd {
+    font-size: 1px;
+    position: relative;
+    top: -4px;
+}
+.rstocnct .mobilesv {
+    font-size: 12px;
+    color: #fff;
+    padding: 0 1px;
+    letter-spacing: 0.9px;
+}
+.rstocnct .icon-hgd {
+    font-size: 1px;
+    position: relative;
+    top: -4px;
+}
+.rstocnct .icon-wxl {
+    font-size: 10px;
+}
+.store-details .mobilesv {
+    font-size: 11px;
+    color: #424242;
+    font-weight: 400;
+}
+.store-details p.contact-info span.mobilesv {
+    margin: 0;
+}
+.store-details .icon-hgd {
+    font-size: 1px;
+}
+.store-details .icon-wxl {
+    font-size: 8px;
+}
+.jdtlphntxt .mobilesv {
+    font-size: 10px;
+    color: #424242;
+    font-weight: 400;
+}
+.jdtlphntxt .icon-hgd {
+    font-size: 1px;
+}
+.jdtlphntxt .icon-wxl {
+    font-size: 8px;
+}
+.jdtlphntxt .mobilesv {
+    letter-spacing: 0.5px;
+}
+.compdt .mobilesv {
+    font-size: 10px;
+    color: #424242;
+    font-weight: 400;
+}
+.compdt .icon-hgd {
+    font-size: 1px;
+}
+.compdt .icon-wxl {
+    font-size: 8px;
+}
