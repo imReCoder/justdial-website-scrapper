@@ -3,10 +3,10 @@ const fs = require('fs');
 const stealthPlugin = require('puppeteer-extra-plugin-stealth');
 const path = require('path');
 // Change These Values To Search
-const CITY = 'Bangalore';
-const KEYWORD = 'Plumber';
-const INITIAL_PAGE = 0;
-const NUMBER_OF_PAGES = 1;
+const CITY = 'Pune';
+const KEYWORD = 'Dog Walking Services';
+const INITIAL_PAGE = 11;
+const NUMBER_OF_PAGES = 12;
 
 const NUMBER_CODE_MAP = {
   'icon-acb': '0',
@@ -50,7 +50,7 @@ const parsePage = async (pageNumber) => {
   let directory = [];
   const browser = await puppeteer.launch({
     headless: false,
-    args: ['--no-sandbox'],
+    args: ['--no-sandbox', '--proxy-server=http://api.scraperapi.com?api_key=bd5ad2ee8714a704864372c25c50b705&url='],
   });
 
   try {
@@ -72,99 +72,97 @@ const parsePage = async (pageNumber) => {
       const listings = document.getElementsByClassName('cntanr');
 
       for await (const listing of listings) {
-        console.log('listing', listing);
-        const name = listing.getElementsByClassName('lng_cont_name')[0]
-          .textContent;
-        const url = listing.attributes[1].value;
-        const p = await screenshot(listing.getElementsByClassName('contact-info')[0]);
-        console.log("phone is ", p);
-        // const phoneNumberArr = Array.from(
-        //   listing.getElementsByClassName('mobilesv')
-        // );
-        // console.log("Phone number arr ", phoneNumberArr);
-        // const phoneNumber = phoneNumberArr
-        //   .map((number) => NUMBER_CODE_MAP[number.classList[1]])
-        //   .join('');
+        try {
 
-        entries.push({ name, url, phoneNumber: p });
+          const name = listing.getElementsByClassName('lng_cont_name')[0]
+            ?.textContent || listing.getElementById("ncard1")?.textContent || '';
+          const url = listing.attributes[1].value;
+          const p = await screenshot(listing.getElementsByClassName('contact-info')[0]);
+          console.log("phone is ", p);
+          entries.push({ name, url, phoneNumber: p });
+        } catch (e) {
+          console.log("catched 11: ", e);
+
+        }
       }
 
       return entries;
     }, NUMBER_CODE_MAP);
 
     console.log('Total Listing.s Found:', directory.length);
+    let counter = 0;
+    // for await (const listing of directory) {
 
-    for await (const listing of directory) {
-      console.log('Navigating to Listing:', listing.name);
+    //   console.log('Navigating to Listing:', listing.name, " || Index: ", ++counter);
+    //   try {
+    //     await page.goto(listing.url);
+    //   const details = await page.evaluate(() => {
+    //     const name = document
+    //       .getElementsByClassName('rstotle')[0]
+    //       ?.textContent?.trim() | '';
+    //     const rating = document.getElementsByClassName('total-rate')[0]
+    //       ?.textContent || '';
+    //     const votes = document
+    //       .getElementsByClassName('votes')[0]
+    //       ?.textContent?.trim() || '';
+    //     const address = document
+    //       .getElementById('fulladdress')
+    //       .getElementsByClassName('lng_add')[0]?.textContent || '';
+    //     removedn('showmore');
+    //     const categoriesArr = Array.from(
+    //       document.getElementsByClassName('showmore')[0].children
+    //     );
+    //     const categories = categoriesArr
+    //       .map((category) => category.textContent.trim())
+    //       .join(', ');
+    //     const servicesNode = document.getElementsByClassName(
+    //       '.quickinfowrp'
+    //     )[0];
+    //     const businfo =
+    //       document.getElementsByClassName('detl') &&
+    //       document.getElementsByClassName('detl')[0]
+    //         ? document.getElementsByClassName('detl')[0]?.innerText || ''
+    //         : '-';
+    //     const faq =
+    //       document.getElementsByClassName('city_sec') &&
+    //       document.getElementsByClassName('city_sec')[0]
+    //         ? document.getElementsByClassName('city_sec')[0]?.innerText
+    //         : '-';
 
-      await page.goto(listing.url);
-      console.log("listing info is ", listing);
-      const details = await page.evaluate(() => {
-        const name = document
-          .getElementsByClassName('rstotle')[0]
-          ?.textContent?.trim() | '';
-        const rating = document.getElementsByClassName('total-rate')[0]
-          ?.textContent || '';
-        const votes = document
-          .getElementsByClassName('votes')[0]
-          .textContent.trim();
-        const address = document
-          .getElementById('fulladdress')
-          .getElementsByClassName('lng_add')[0]?.textContent || '';
-        removedn('showmore');
-        const categoriesArr = Array.from(
-          document.getElementsByClassName('showmore')[0].children
-        );
-        const categories = categoriesArr
-          .map((category) => category.textContent.trim())
-          .join(', ');
-        const servicesNode = document.getElementsByClassName(
-          '.quickinfowrp'
-        )[0];
-        const businfo =
-          document.getElementsByClassName('detl') &&
-          document.getElementsByClassName('detl')[0]
-            ? document.getElementsByClassName('detl')[0]?.innerText || ''
-            : '-';
-        const faq =
-          document.getElementsByClassName('city_sec') &&
-          document.getElementsByClassName('city_sec')[0]
-            ? document.getElementsByClassName('city_sec')[0]?.innerText
-            : '-';
+    //     let details = {
+    //       rating,
+    //       votes,
+    //       address,
+    //       categories,
+    //       businfo,
+    //       faq
+    //     };
 
-        let details = {
-          name,
-          rating,
-          votes,
-          address,
-          categories,
-          businfo,
-          faq
-        };
+    //     if (servicesNode) {
+    //       const servicesArr = Array.from(
+    //         document
+    //           .getElementsByClassName('.quickinfowrp')[0]
+    //           .getElementsByClassName('text')
+    //       );
+    //       const services = servicesArr
+    //         .map((service) => service.textContent.trim())
+    //         .join(', ');
 
-        if (servicesNode) {
-          const servicesArr = Array.from(
-            document
-              .getElementsByClassName('.quickinfowrp')[0]
-              .getElementsByClassName('text')
-          );
-          const services = servicesArr
-            .map((service) => service.textContent.trim())
-            .join(', ');
+    //       details = {
+    //         ...details,
+    //         services,
+    //       };
+    //     }
 
-          details = {
-            ...details,
-            services,
-          };
-        }
+    //     return details;
+    //   });
 
-        return details;
-      });
-
-      const listingIndex = directory.findIndex((x) => x.url === listing.url);
-      directory[listingIndex] = { ...directory[listingIndex], ...details };
-      console.log(directory);
-    }
+    //   const listingIndex = directory.findIndex((x) => x.url === listing.url);
+    //   directory[listingIndex] = { ...directory[listingIndex], ...details };
+    //   } catch (e) {
+    //     console.log("catched ", e)
+    //   }
+    // }
   } catch (e) {
     console.error(e);
   } finally {
