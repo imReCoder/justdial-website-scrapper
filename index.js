@@ -4,9 +4,9 @@ const stealthPlugin = require('puppeteer-extra-plugin-stealth');
 const path = require('path');
 // Change These Values To Search
 const CITY = 'Pune';
-const KEYWORD = 'Dog Walking Services';
-const INITIAL_PAGE = 11;
-const NUMBER_OF_PAGES = 12;
+const KEYWORD = 'Dog trainers';
+const INITIAL_PAGE = 0;
+const NUMBER_OF_PAGES = 21;
 
 const NUMBER_CODE_MAP = {
   'icon-acb': '0',
@@ -39,7 +39,7 @@ const autoScroll = async (page) => {
           clearInterval(timer);
           resolve();
         }
-      }, 100);
+      }, 300);
     });
   });
 };
